@@ -1,22 +1,23 @@
 require_relative "cell"
 
 class Board
-  attr_accessor :columns, :rows, :cells, :border
+  attr_accessor :column_no, :row_no, :cells, :border, :columns
 
   def initialize
-    @columns = 7
-    @rows = 6
+    @column_no = 7
+    @row_no = 6
     @cells = self.create_cells
     @border = "---+---+---+---+---+---+---"
+    @columns = self.generate_columns(cells)
   end
 
   def create_cells
     cells = []
     y = 0
-    while y < rows
+    while y < row_no
       x = 0
       row = []
-      while x < columns
+      while x < column_no
         cell = Cell.new(x, y)
         row << cell
         x += 1
@@ -40,7 +41,35 @@ class Board
     end
     puts "    "
   end
-end
 
-board = Board.new
-board.display_board
+  def generate_columns(cells)
+    columns = []
+    x = 0
+    while x <= 6
+      y = 0
+      column = []
+      while y <= 5
+        column << cells[y][x]
+        y += 1
+      end
+      columns << column
+      x += 1
+    end
+    columns
+  end
+
+  def find_available_cell(column_no)
+    column = columns[column_no]
+    next_available_cell = column[0]
+    i = 0
+    while i < column.length
+      if column[i].occupied
+        next_available_cell = column[i + 1]
+      else
+        break
+      end
+      i += 1
+    end
+    next_available_cell
+  end
+end
