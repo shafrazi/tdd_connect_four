@@ -11,9 +11,9 @@ class Cell
   end
 
   def update_cell(token)
-    value = " #{token.symbol} "
-    owner = token.owner
-    occupied = true
-    token = token
+    @value = " #{token.symbol} "
+    @owner = token.owner
+    @occupied = true
+    @token = token
   end
 end

@@ -33,11 +33,13 @@ class Board
     puts "    "
     puts cell_indices.join("|")
     puts border
-    cells.each do |row|
+    i = row_no - 1
+    while i >= 0
       cell_values = []
-      cell_values = row.map { |i| i.value }
+      cell_values = cells[i].map { |i| i.value }
       puts cell_values.join("|")
       puts border
+      i -= 1
     end
     puts "    "
   end
