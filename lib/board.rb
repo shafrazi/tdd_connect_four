@@ -110,4 +110,12 @@ class Board
     end
     diagonal_cells
   end
+
+  def all_cells
+    all_cells = []
+    cells.each do |row|
+      row.each { |cell| all_cells << cell }
+    end
+    all_cells
+  end
 end

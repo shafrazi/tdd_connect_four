@@ -44,4 +44,10 @@ describe Board do
       expect(board.find_available_cell(column)).to eql(second_row_first_cell)
     end
   end
+
+  describe "#all_cells" do
+    it "returns the number of all cells correctly" do
+      expect(board.all_cells.length).to eql(42)
+    end
+  end
 end

@@ -4,12 +4,13 @@ require_relative "token"
 require_relative "cell"
 
 class Game
-  attr_accessor :board, :players
+  attr_accessor :board, :players, :game_won, :game_complete
 
   def initialize
     @board = Board.new
     @players = self.create_players
     @game_complete = false
+    @game_won = false
   end
 
   def create_players
@@ -93,8 +94,31 @@ class Game
 
     if sequence == 4
       win_status = true
+      self.game_won = true
     end
-
     win_status
+  end
+
+  def update_game_status
+    if board.all_cells.all? { |cell| cell.occupied } && !game_won
+      self.game_complete = true
+      puts "Game drawn!"
+    elsif self.game_won
+      board.display_board
+      self.game_complete = true
+      puts "#{active_player.name} won! "
+    end
+  end
+
+  def start_game
+    while !self.game_complete
+      board.display_board
+      puts "#{active_player.name} enter the column number to play token:"
+      input = gets.chomp.to_i
+      cell = active_player.play_token(input)
+      check_for_win(cell)
+      update_game_status
+      switch_players
+    end
   end
 end
