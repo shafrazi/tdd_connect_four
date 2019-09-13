@@ -42,6 +42,8 @@ class Game
   def check_for_win(cell)
     target_row = board.cells[cell.y]
     target_column = board.columns[cell.x]
+    target_diagonal_right = board.create_diagonal(cell, "right")
+    target_diagonal_left = board.create_diagonal(cell, "left")
     win_status = false
 
     # horizontal
@@ -67,9 +69,32 @@ class Game
       i += 1
     end
 
+    # diagonal upward right
+    i = 0
+    while i < target_diagonal_right.length && sequence != 4
+      if target_diagonal_right[i].owner == cell.owner
+        sequence += 1
+      else
+        sequence = 0
+      end
+      i += 1
+    end
+
+    # diagonal upward left
+    i = 0
+    while i < target_diagonal_left.length && sequence != 4
+      if target_diagonal_left[i].owner == cell.owner
+        sequence += 1
+      else
+        sequence = 0
+      end
+      i += 1
+    end
+
     if sequence == 4
       win_status = true
     end
+
     win_status
   end
 end

@@ -43,11 +43,33 @@ describe Game do
     end
 
     it "returns true if vertically cells are positioned correctly" do
-      player2 = game1.players[0]
-      player2.play_token(4)
-      player2.play_token(4)
-      player2.play_token(4)
-      expect(game1.check_for_win(player2.play_token(4))).to eql(true)
+      game1_player1 = game1.players[0]
+      game1_player1.play_token(4)
+      game1_player1.play_token(4)
+      game1_player1.play_token(4)
+      expect(game1.check_for_win(game1_player1.play_token(4))).to eql(true)
+    end
+
+    it "returns true if diagonally cells are positioned correctly at the right direction" do
+      game2 = Game.new
+      game2_player2 = game1.players[1]
+      cells = game2.board.cells
+      cells[0][0].owner = "Player 2"
+      cells[1][1].owner = "Player 2"
+      cells[2][2].owner = "Player 2"
+      cells[3][3].owner = "Player 2"
+      expect(game2.check_for_win(cells[3][3])).to eql(true)
+    end
+
+    it "returns true if diagonally cells are positioned correctly at the left direction" do
+      game3 = Game.new
+      game3_player2 = game3.players[1]
+      cells = game3.board.cells
+      cells[1][5].owner = "Player 2"
+      cells[2][4].owner = "Player 2"
+      cells[4][2].owner = "Player 2"
+      cells[3][3].owner = "Player 2"
+      expect(game3.check_for_win(cells[3][3])).to eql(true)
     end
   end
 end

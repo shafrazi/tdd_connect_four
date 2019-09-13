@@ -74,4 +74,40 @@ class Board
     end
     next_available_cell
   end
+
+  def create_diagonal(cell, direction)
+    x = cell.x
+    y = cell.y
+    diagonal_cells = []
+    if direction == "right"
+      if (x - y) >= 0
+        starting_x = x - y
+        starting_y = 0
+      else
+        starting_x = 0
+        starting_y = y - x
+      end
+
+      while starting_x <= 6 && starting_y <= 5
+        diagonal_cells << cells[starting_y][starting_x]
+        starting_x += 1
+        starting_y += 1
+      end
+    elsif direction == "left"
+      if (x + y) <= 6
+        starting_x = x + y
+        starting_y = 0
+      else
+        starting_x = 6
+        starting_y = (x + y) - 6
+      end
+
+      while starting_x >= 0 && starting_y <= 5
+        diagonal_cells << cells[starting_y][starting_x]
+        starting_x -= 1
+        starting_y += 1
+      end
+    end
+    diagonal_cells
+  end
 end
