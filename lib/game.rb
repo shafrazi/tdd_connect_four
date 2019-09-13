@@ -116,6 +116,11 @@ class Game
       puts "#{active_player.name} enter the column number to play token:"
       input = gets.chomp.to_i
       cell = active_player.play_token(input)
+      while !cell
+        puts "Column already full! Enter another column:"
+        input = gets.chomp.to_i
+        cell = active_player.play_token(input)
+      end
       check_for_win(cell)
       update_game_status
       switch_players
